@@ -31,9 +31,7 @@ class User < ApplicationRecord
     :registerable,
     :recoverable,
     :rememberable,
-    :validatable,
-    :omniauthable,
-    omniauth_providers: [:google_oauth2]
+    :validatable
 
   # associations
   has_one_attached :avatar do |attachable|
@@ -47,14 +45,6 @@ class User < ApplicationRecord
       less_than: 10.megabytes,
       message: I18n.t('activerecord.errors.models.user.attributes.avatar.size', size: 10)
     }
-
-  def self.from_google(google_params)
-    create_with(
-      uid: google_params[:uid],
-      provider: 'google',
-      password: Devise.friendly_token[0, 20]
-    ).find_or_create_by!(email: google_params[:email])
-  end
 
   def admin?
     has_role?(:admin)

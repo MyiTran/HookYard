@@ -5,9 +5,10 @@ source 'https://rubygems.org'
 gem 'bootsnap', require: false
 gem 'good_migrations'
 gem 'pg', '~> 1.5'
-gem 'puma', '>= 5.0'
-gem 'rails', '~> 7.2.0'
+gem 'puma', '~> 7.2', '>= 7.2.1'
+gem 'rails', '~> 7.2.3', '>= 7.2.3.1'
 gem 'redis', '>= 4.0.1'
+gem 'connection_pool', '~> 2.5.5'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'tzinfo-data', platforms: %i[windows jruby]
@@ -16,10 +17,8 @@ gem 'image_processing'
 gem 'enumerize'
 
 # Auth
-gem 'devise'
+gem 'devise', '>= 5.0.4'
 gem 'rolify'
-gem 'omniauth-google-oauth2'
-gem 'omniauth-rails_csrf_protection'
 
 # Policy
 gem 'pundit', '~> 2.4'
