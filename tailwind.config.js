@@ -11,7 +11,6 @@ module.exports = {
     'app/frontend/stylesheets/*.scss',
     'app/frontend/images/icons/*.svg',
     'config/initializers/simple_form.rb',
-    'config/initializers/simple_form_daisyui.rb',
     'app/views/**/**/*.{html,html.erb,erb,js,ts,rb,slim,html.slim}',
     'app/views/devise/**/*.html.slim',
     'app/views/layouts/*.{html,html.erb,erb,js,ts,rb,slim,html.slim}',
@@ -19,8 +18,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require('daisyui')],
-  daisyui: {
-    themes: ['light', 'dark'],
-  },
+  plugins: [],
 };
