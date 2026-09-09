@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gem 'bootsnap', require: false
 gem 'good_migrations'
-gem 'pg', '~> 1.5'
+gem 'pg', '~> 1.6'
 gem 'puma', '~> 7.2', '>= 7.2.1'
 gem 'rails', '~> 7.2.3', '>= 7.2.3.1'
 gem 'redis', '>= 4.0.1'
