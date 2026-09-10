@@ -12,7 +12,7 @@ function Sidebar({ user }: SidebarProps) {
   const menuItems = isAdmin
     ? [
         { name: "Overview", path: "/admin" },
-        { name: "Users", path: "/admin/users" },
+        { name: "Support accounts", path: "/admin/users" },
         { name: "Tenants", path: "/admin/tenants" },
         { name: "Customers", path: "/admin/customers" },
         { name: "Endpoints", path: "/admin/endpoints" },

@@ -12,7 +12,7 @@ function MenuIcon({ name }: MenuIconProps) {
     );
   }
 
-  if (name === "Users" || name === "Customers") {
+  if (name === "Support accounts" || name === "Customers") {
     return (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <circle cx="9" cy="8" r="3" />
