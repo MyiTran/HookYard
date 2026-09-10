@@ -1,4 +1,6 @@
-function MenuIcon({ name }: { name: string }) {
+type MenuIconProps = { name: string; };
+
+function MenuIcon({ name }: MenuIconProps) {
   if (name === "Overview") {
     return (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">

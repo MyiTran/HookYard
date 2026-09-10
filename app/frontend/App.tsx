@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import DashboardPage from "./pages/DashboardPage";
+import LoginPage from "./pages/auth/LoginPage";
+import AdminDashboardPage from "./pages/admin/dashboard/DashboardPage";
+import SupportDashboardPage from "./pages/support/dashboard/DashboardPage";
 import type { CurrentUser } from "./types/user";
-import LoginPage from "./pages/LoginPage";
 
 function App() {
   const [user, setUser] = useState<CurrentUser | null>(null);
@@ -15,19 +16,21 @@ function App() {
     }
 
     async function loadUser() {
-      const response = await fetch("/api/me", {
-        credentials: "include",
-        headers: { Accept: "application/json" },
-      });
+      try {
+        const response = await fetch("/api/me", {
+          credentials: "include",
+          headers: { Accept: "application/json" },
+        });
 
-      if (!response.ok) {
+        if (!response.ok) throw new Error();
+
+        const data = await response.json();
+        setUser(data.user);
+      } catch {
         window.location.href = "/users/sign_in";
-        return;
+      } finally {
+        setLoading(false);
       }
-
-      const data = await response.json();
-      setUser(data.user);
-      setLoading(false);
     }
 
     loadUser();
@@ -37,15 +40,21 @@ function App() {
     return <LoginPage />;
   }
 
-  if (loading || !user) {
+  if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#EBEFEC] text-[#5F6E64]">
+      <div className="flex min-h-screen items-center justify-center bg-[#CFE0D3] text-[#5F6E64]">
         Loading...
       </div>
     );
   }
 
-  return <DashboardPage user={user} />;
+  if (!user) return null;
+
+  if (user.role === "admin") {
+    return <AdminDashboardPage user={user} />;
+  }
+
+  return <SupportDashboardPage user={user} />;
 }
 
 export default App;
