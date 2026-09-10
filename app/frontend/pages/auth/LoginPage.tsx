@@ -76,11 +76,6 @@ function LoginPage() {
               Track deliveries, investigate failures and replay webhooks from one secure workspace.
             </p>
           </div>
-
-          <div className="flex items-center gap-3 text-sm font-medium text-[#53665A]">
-            <span className="h-2 w-2 rounded-full bg-[#43AD61]" />
-            <span>All systems operational</span>
-          </div>
         </section>
 
         <section className="flex items-center justify-center p-8 sm:p-12 lg:p-16">
