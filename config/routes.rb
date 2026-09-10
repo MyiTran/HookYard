@@ -1,33 +1,27 @@
-# frozen_string_literal: true
-
 Rails.application.routes.draw do
-  if Rails.env.development?
-    get '/erd', to: 'docs#erd'
-  end
+  get '/erd', to: 'docs#erd' if Rails.env.development?
 
-  authenticate :user, lambda { |u| u.has_role?(:super_admin) } do
+  authenticate :user, ->(user) { user.has_role?(:admin) } do
     mount Sidekiq::Web => '/sidekiq'
-    unless Rails.env.production?
-      get 'admin/console', to: 'admin/console#index'
-    end
+    get '/admin/console', to: 'admin/console#index' unless Rails.env.production?
   end
 
   devise_for :users,
+    skip: [:registrations],
     controllers: {
-      sessions: 'authentication/sessions',
-      registrations: 'authentication/registrations'
+      sessions: 'authentication/sessions'
     }
 
+  devise_scope :user do
+    get '/api/me', to: 'authentication/sessions#current'
+  end
+
   namespace :admin do
+    root to: 'dashboard#index'
     resources :users
-
-    root to: 'users#index'
   end
 
-  namespace :employees do
-    # Add employee routes here
-  end
+  root 'dashboard#index'
 
-  root 'home#index'
-  get 'up' => 'rails/health#show', as: :rails_health_check
+  get '/up', to: 'rails/health#show', as: :rails_health_check
 end
