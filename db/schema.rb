@@ -53,14 +53,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_09_100814) do
     t.index ["resource_type", "resource_id"], name: "index_roles_on_resource"
   end
 
-  create_table "tenants", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name", null: false
-    t.string "slug", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["slug"], name: "index_tenants_on_slug", unique: true
-  end
-
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -75,12 +67,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_09_100814) do
     t.datetime "updated_at", null: false
     t.string "provider"
     t.string "uid"
-    t.uuid "tenant_id"
     t.string "name"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["tenant_id"], name: "index_users_on_tenant_id"
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
@@ -93,5 +83,4 @@ ActiveRecord::Schema[7.2].define(version: 2026_09_09_100814) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "users", "tenants"
 end

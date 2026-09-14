@@ -131,6 +131,9 @@ function LoginPage() {
                   required
                   className="h-14 w-full rounded-xl border border-[#C9DACE] bg-white px-4 outline-none transition placeholder:text-[#A4B0A8] focus:border-[#23613F] focus:ring-2 focus:ring-[#23613F]/10"
                 />
+                <div className="mb-2 flex items-center justify-between">
+                    <a href="/users/password/new" className="text-sm font-semibold text-[#23613F] hover:underline">Forgot password?</a>
+                </div>
               </div>
 
               {error && (
@@ -148,8 +151,9 @@ function LoginPage() {
               </button>
             </form>
 
-            <p className="mt-7 text-center text-xs leading-5 text-[#829087]">
-              Accounts are created and managed by a HookYard administrator
+            <p className="mt-7 text-center text-sm text-[#718078]">
+                Don&apos;t have an account?{" "}
+                <a href="/users/sign_up" className="font-semibold text-[#23613F] hover:underline">Create account</a>
             </p>
           </div>
         </section>

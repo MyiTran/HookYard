@@ -35,15 +35,8 @@ module Authentication
         id: user.id,
         name: user.name,
         email: user.email,
-        role: user.admin? ? 'admin' : 'support',
-        tenant: tenant_data(user)
+        role: user.admin? ? 'admin' : 'support'
       }
-    end
-
-    def tenant_data(user)
-      return if user.tenant.blank?
-
-      { id: user.tenant.id, name: user.tenant.name }
     end
   end
 end

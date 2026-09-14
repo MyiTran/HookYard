@@ -4,8 +4,6 @@ import type { CurrentUser } from "../../../types/user";
 type DashboardPageProps = { user: CurrentUser; };
 
 function SupportDashboardPage({ user }: DashboardPageProps) {
-  const tenantName = user.tenant?.name || "Tenant";
-
   return (
     <AppLayout user={user} title="Overview">
       <div className="flex items-start justify-between">
@@ -17,7 +15,7 @@ function SupportDashboardPage({ user }: DashboardPageProps) {
 
         <div className="flex items-center gap-3 rounded-full border border-[#CEDDD2] bg-white px-4 py-2 shadow-sm">
           <span className="h-2 w-2 rounded-full bg-[#43AD61]" />
-          <span className="text-sm font-medium text-[#405348]">{tenantName} operational</span>
+          <span className="text-sm font-medium text-[#405348]">Platform operational</span>
         </div>
       </div>
 

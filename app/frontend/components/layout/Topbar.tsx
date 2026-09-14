@@ -15,8 +15,8 @@ function Topbar({ user, title }: TopbarProps) {
 
       <div className="flex items-center gap-6">
         <div className="text-right">
-          <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#65766B]">{isAdmin ? "Scope" : "Tenant"}</span>
-          <span className="mt-1 block text-sm font-semibold">{isAdmin ? "All tenants" : user.tenant?.name}</span>
+          <span className="block text-[10px] font-semibold uppercase tracking-[2px] text-[#65766B]">{isAdmin ? "Scope" : "Project"}</span>
+          <span className="mt-1 block text-sm font-semibold">{isAdmin ? "All projects" : "No project selected"}</span>
         </div>
 
         <div className="h-9 w-px bg-[#DCE6DF]" />

@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
-import LoginPage from "./pages/auth/LoginPage";
 import AdminDashboardPage from "./pages/admin/dashboard/DashboardPage";
+import LoginPage from "./pages/auth/LoginPage";
+import SignupPage from "./pages/auth/SignupPage";
 import SupportDashboardPage from "./pages/support/dashboard/DashboardPage";
 import type { CurrentUser } from "./types/user";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 
 function App() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const isLoginPage = window.location.pathname === "/users/sign_in";
+
+  const currentPath = window.location.pathname;
+  const isLoginPage = currentPath === "/users/sign_in";
+  const isSignupPage = currentPath === "/users/sign_up";
+  const isForgotPasswordPage = currentPath === "/users/password/new";
+  const isResetPasswordPage = currentPath === "/users/password/edit";
+  const isAuthPage = isLoginPage || isSignupPage || isForgotPasswordPage || isResetPasswordPage;
 
   useEffect(() => {
-    if (isLoginPage) {
+    if (isAuthPage) {
       setLoading(false);
       return;
     }
@@ -34,11 +43,12 @@ function App() {
     }
 
     loadUser();
-  }, [isLoginPage]);
+  }, [isAuthPage]);
 
-  if (isLoginPage) {
-    return <LoginPage />;
-  }
+  if (isLoginPage) return <LoginPage />;
+  if (isSignupPage) return <SignupPage />;
+  if (isForgotPasswordPage) return <ForgotPasswordPage />;
+  if (isResetPasswordPage) return <ResetPasswordPage />;
 
   if (loading) {
     return (
@@ -49,10 +59,7 @@ function App() {
   }
 
   if (!user) return null;
-
-  if (user.role === "admin") {
-    return <AdminDashboardPage user={user} />;
-  }
+  if (user.role === "admin") return <AdminDashboardPage user={user} />;
 
   return <SupportDashboardPage user={user} />;
 }
