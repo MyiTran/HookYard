@@ -26,7 +26,7 @@ function ForgotPasswordPage() {
       const data = await response.json();
       setMessage(data.message);
     } catch {
-      setMessage("Cannot connect to the server. Please try again.");
+      setMessage("Cannot connect to the server. Please try again!");
     } finally {
       setLoading(false);
     }

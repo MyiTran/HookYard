@@ -12,12 +12,12 @@ function ResetPasswordPage() {
     setError("");
 
     if (!token) {
-      setError("Password reset link is invalid.");
+      setError("Password reset link is invalid!");
       return;
     }
 
     if (password !== passwordConfirmation) {
-      setError("Password confirmation does not match.");
+      setError("Password confirmation does not match!");
       return;
     }
 
@@ -35,24 +35,20 @@ function ResetPasswordPage() {
           "X-CSRF-Token": csrfToken || "",
         },
         body: JSON.stringify({
-          user: {
-            reset_password_token: token,
-            password,
-            password_confirmation: passwordConfirmation,
-          },
+          user: { reset_password_token: token, password, password_confirmation: passwordConfirmation,},
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.errors?.join(", ") || "Unable to update password.");
+        setError(data.errors?.join(", ") || "Unable to update password!");
         return;
       }
 
       window.location.href = "/users/sign_in";
     } catch {
-      setError("Cannot connect to the server. Please try again.");
+      setError("Cannot connect to the server. Please try again!");
     } finally {
       setLoading(false);
     }

@@ -12,7 +12,7 @@ function MenuIcon({ name }: MenuIconProps) {
     );
   }
 
-  if (name === "Support accounts" || name === "Customers") {
+  if (name === "Support accounts") {
     return (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <circle cx="9" cy="8" r="3" />
@@ -23,7 +23,7 @@ function MenuIcon({ name }: MenuIconProps) {
     );
   }
 
-  if (name === "Tenants") {
+  if (name === "Project") {
     return (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
         <path d="M4 21V5l8-3 8 3v16" />

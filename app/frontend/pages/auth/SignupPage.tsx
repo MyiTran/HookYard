@@ -12,7 +12,7 @@ function SignupPage() {
     setError("");
 
     if (password !== passwordConfirmation) {
-      setError("Password confirmation does not match.");
+      setError("Password confirmation does not match!");
       return;
     }
 
@@ -29,26 +29,21 @@ function SignupPage() {
           "Content-Type": "application/json",
           "X-CSRF-Token": csrfToken || "",
         },
-        body: JSON.stringify({
-          user: {
-            name,
-            email,
-            password,
-            password_confirmation: passwordConfirmation,
-          },
+        body: JSON.stringify({ 
+            user: { name, email, password, password_confirmation: passwordConfirmation,},
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.errors?.join(", ") || "Unable to create your account.");
+        setError(data.errors?.join(", ") || "Unable to create your account!");
         return;
       }
 
       window.location.href = "/";
     } catch {
-      setError("Cannot connect to the server. Please try again.");
+      setError("Cannot connect to the server. Please try again!");
     } finally {
       setLoading(false);
     }

@@ -31,12 +31,7 @@ module Authentication
     private
 
     def user_data(user)
-      {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: user.admin? ? 'admin' : 'support'
-      }
+      { id: user.id, name: user.name, email: user.email, role: user.admin? ? 'admin' : 'support' }
     end
   end
 end

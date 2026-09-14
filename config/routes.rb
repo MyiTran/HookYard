@@ -7,15 +7,13 @@ Rails.application.routes.draw do
   end
 
   devise_for :users,
-    skip: [:registrations],
     controllers: {
       sessions: 'authentication/sessions',
+      registrations: 'authentication/registrations',
       passwords: 'authentication/passwords'
     }
 
   devise_scope :user do
-    get '/users/sign_up', to: 'authentication/registrations#new'
-    post '/users', to: 'authentication/registrations#create'
     get '/api/me', to: 'authentication/sessions#current'
   end
 

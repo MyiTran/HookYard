@@ -13,14 +13,13 @@ function Sidebar({ user }: SidebarProps) {
     ? [
         { name: "Overview", path: "/admin" },
         { name: "Support accounts", path: "/admin/users" },
-        { name: "Tenants", path: "/admin/tenants" },
-        { name: "Customers", path: "/admin/customers" },
+        { name: "Projects", path: "/admin/projects" },
         { name: "Endpoints", path: "/admin/endpoints" },
         { name: "Deliveries", path: "/admin/deliveries" },
       ]
     : [
         { name: "Overview", path: "/" },
-        { name: "Customers", path: "/customers" },
+        { name: "Projects", path: "/projects" },
         { name: "Endpoints", path: "/endpoints" },
         { name: "Deliveries", path: "/deliveries" },
         { name: "Replay", path: "/replay" },
