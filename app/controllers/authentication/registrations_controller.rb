@@ -1,7 +1,5 @@
 module Authentication
   class RegistrationsController < Devise::RegistrationsController
-    layout 'application'
-
     def create
       build_resource(sign_up_params)
 
