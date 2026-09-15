@@ -8,6 +8,7 @@
 #  confirmed_at           :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  name                   :string
 #  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -39,6 +40,7 @@ class User < ApplicationRecord
   end
 
   # validations
+  validates :name, presence: true
   validates :avatar,
     content_type: /\Aimage\/.*\z/,
     size: {
@@ -50,7 +52,7 @@ class User < ApplicationRecord
     has_role?(:admin)
   end
 
-  def employee?
-    !admin? && has_role?(:employee)
+  def support?
+    has_role?(:support)
   end
 end

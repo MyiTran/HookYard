@@ -84,15 +84,14 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '#employee?' do
-      it 'returns true if the user has an employee role and is not an admin' do
-        user.add_role(:employee)
-        expect(user.employee?).to be true
+    describe '#support?' do
+      it 'returns true if the user has a support role' do
+        user.add_role(:support)
+        expect(user.support?).to be true
       end
 
-      it 'returns false if the user is an admin' do
-        user.add_role(:admin)
-        expect(user.employee?).to be false
+      it 'returns false if the user does not have a support role' do
+        expect(user.support?).to be false
       end
     end
   end
