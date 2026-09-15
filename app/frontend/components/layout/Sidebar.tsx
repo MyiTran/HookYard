@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import type { CurrentUser } from "../../types/user";
 import MenuIcon from "./MenuIcon";
 
@@ -7,7 +8,9 @@ type SidebarProps = { user: CurrentUser; };
 function Sidebar({ user }: SidebarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const isAdmin = user.role === "admin";
-  const currentPath = window.location.pathname;
+  
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   const menuItems = isAdmin
     ? [
@@ -54,14 +57,14 @@ function Sidebar({ user }: SidebarProps) {
           const active = currentPath === item.path;
 
           return (
-            <a
+            <Link
               key={item.name}
-              href={item.path}
+              to={item.path}
               className={active ? "flex h-12 items-center gap-3 rounded-xl bg-[#B6CEBC] px-4 font-semibold text-[#173D28]" : "flex h-12 items-center gap-3 rounded-xl px-4 font-medium text-[#405348] transition hover:bg-[#C1D5C6] hover:text-[#173D28]"}
             >
               <MenuIcon name={item.name} />
               <span>{item.name}</span>
-            </a>
+            </Link>
           );
         })}
       </nav>

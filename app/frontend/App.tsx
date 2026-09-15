@@ -1,24 +1,31 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import AppLayout from "./components/layout/AppLayout";
 import AdminDashboardPage from "./pages/admin/dashboard/DashboardPage";
+import AdminProjectsPage from "./pages/admin/projects/ProjectsPage";
+import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
 import LoginPage from "./pages/auth/LoginPage";
+import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import SignupPage from "./pages/auth/SignupPage";
 import SupportDashboardPage from "./pages/support/dashboard/DashboardPage";
+import SupportProjectsPage from "./pages/support/projects/ProjectsPage";
 import type { CurrentUser } from "./types/user";
-import ForgotPasswordPage from "./pages/auth/ForgotPasswordPage";
-import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 
-function App() {
+const authPaths = [
+  "/users/sign_in",
+  "/users/sign_up",
+  "/users/password/new",
+  "/users/password/edit",
+];
+
+function AppRoutes() {
+  const location = useLocation();
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [loading, setLoading] = useState(true);
-
-  const currentPath = window.location.pathname;
-  const isLoginPage = currentPath === "/users/sign_in";
-  const isSignupPage = currentPath === "/users/sign_up";
-  const isForgotPasswordPage = currentPath === "/users/password/new";
-  const isResetPasswordPage = currentPath === "/users/password/edit";
-  const isAuthPage = isLoginPage || isSignupPage || isForgotPasswordPage || isResetPasswordPage;
+  const isAuthPage = authPaths.includes(location.pathname);
 
   useEffect(() => {
+    // Nếu đang ở trang Auth, không cần gọi API kiểm tra "me"
     if (isAuthPage) {
       setLoading(false);
       return;
@@ -45,12 +52,8 @@ function App() {
     loadUser();
   }, [isAuthPage]);
 
-  if (isLoginPage) return <LoginPage />;
-  if (isSignupPage) return <SignupPage />;
-  if (isForgotPasswordPage) return <ForgotPasswordPage />;
-  if (isResetPasswordPage) return <ResetPasswordPage />;
-
-  if (loading) {
+  // Hiển thị màn hình chờ mượt mà khi đang gọi API xác thực
+  if (loading && !isAuthPage) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#CFE0D3] text-[#5F6E64]">
         Loading...
@@ -58,10 +61,64 @@ function App() {
     );
   }
 
-  if (!user) return null;
-  if (user.role === "admin") return <AdminDashboardPage user={user} />;
+  return (
+    <Routes>
+      {/* --- CÁC ROUTE XÁC THỰC (AUTH) --- */}
+      <Route path="/users/sign_in" element={<LoginPage />} />
+      <Route path="/users/sign_up" element={<SignupPage />} />
+      <Route path="/users/password/new" element={<ForgotPasswordPage />} />
+      <Route path="/users/password/edit" element={<ResetPasswordPage />} />
 
-  return <SupportDashboardPage user={user} />;
+      {/* --- CÁC ROUTE DÀNH CHO ADMIN --- */}
+      {user?.role === "admin" && (
+        <>
+          <Route path="/admin" element={<AdminDashboardPage user={user} />} />
+          <Route
+            path="/admin/projects"
+            element={
+              <AppLayout user={user} title="Projects">
+                <AdminProjectsPage />
+              </AppLayout>
+            }
+          />
+        </>
+      )}
+
+      {/* --- CÁC ROUTE DÀNH CHO SUPPORT / USER THƯỜNG --- */}
+      {user && user.role !== "admin" && (
+        <>
+          <Route path="/" element={<SupportDashboardPage user={user} />} />
+          <Route
+            path="/projects"
+            element={
+              <AppLayout user={user} title="Projects">
+                <SupportProjectsPage />
+              </AppLayout>
+            }
+          />
+        </>
+      )}
+
+      {/* --- ĐIỀU HƯỚNG MẶC ĐỊNH KHI KHÔNG KHỚP ROUTE NÀO --- */}
+      <Route
+        path="*"
+        element={
+          <Navigate
+            to={isAuthPage ? "/users/sign_in" : user?.role === "admin" ? "/admin" : "/"}
+            replace
+          />
+        }
+      />
+    </Routes>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
 }
 
 export default App;

@@ -20,8 +20,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'dashboard#index'
     resources :users
+    resources :projects, only: [:index, :show]
   end
 
+  resources :projects
   root 'dashboard#index'
   get '/up', to: 'rails/health#show', as: :rails_health_check
 end

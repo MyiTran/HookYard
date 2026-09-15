@@ -35,6 +35,10 @@ class User < ApplicationRecord
     :validatable
 
   # associations
+  has_many :owned_projects, class_name: 'Project', foreign_key: :owner_id, dependent: :destroy, inverse_of: :owner
+  has_many :project_memberships, dependent: :destroy, inverse_of: :user
+  has_many :joined_projects, through: :project_memberships, source: :project
+  has_many :sent_project_invitations, class_name: 'ProjectInvitation', foreign_key: :invited_by_id, dependent: :destroy, inverse_of: :invited_by
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_limit: [200, 200]
   end
